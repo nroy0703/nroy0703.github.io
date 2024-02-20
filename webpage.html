@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Profile App Website</title>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
+    <style>
+        .body {
+            background-color: #9fef15;
+        }
+        .banner {
+            background-color: #3d38d0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px;
+        }
+        .logo {
+            max-width: 30%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        .image {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+        iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img class="logo" src="C:\Users\nroy0\Downloads\logo-no-background.png" alt="Logo">
+    </div>
+    <h1>Profile App</h1>
+    <main>
+        <iframe src="https://thunkable.site/w/m2U5WdZQizS9oOLSsvvTM" title="Embedded Page"></iframe>
+    </main>
+    <h1>Profile Data</h1>
+    <h2>User Information</h2>
+    <ul id="userList"></ul>
+    <button id="displayButton">Display User Info</button>
+
+    <script type="module">
+        document.body.style.backgroundColor = "#9fef15";
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js';
+        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js';
+
+        const firebaseConfig = {
+            // Your Firebase config here
+            apiKey: "AIzaSyB5cmtryuqkXZJA9iGneVw0HtVODaMbVQE",
+            authDomain: "profileapp-af009.firebaseapp.com",
+            databaseURL: "https://profileapp-af009-default-rtdb.firebaseio.com",
+            projectId: "profileapp-af009",
+            storageBucket: "profileapp-af009.appspot.com",
+            messagingSenderId: "503051867959",
+            appId: "1:503051867959:web:f4cf4809309f0c36736cb2"
+        };
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        function displayUserInfo(userId) {
+            const userList = document.getElementById('userList');
+            userList.innerHTML = '';
+
+            const userRef = ref(database, userId);
+            onValue(userRef, (snapshot) => {
+                const user = snapshot.val();
+                const listItem = document.createElement('li');
+                listItem.innerText = 'Name: ' + user.name + ', Hobbies: ' + user.hobbies;
+                userList.appendChild(listItem);
+            });
+        }
+
+        const displayButton = document.getElementById('displayButton');
+        displayButton.addEventListener('click', () => {
+            displayUserInfo('31p94IXqmRclWrkzB2Uxc3Kj4XE2');
+            displayUserInfo('gRKraj0ZOIbh0VT13WAYBYOTQBI2');
+        });
+
+    </script>
+</body>
+</html>
